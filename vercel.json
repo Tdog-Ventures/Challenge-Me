@@ -1,0 +1,11 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "crons": [
+    {
+      "path": "/api/cron/facebook",
+      "schedule": "0 9,13,18 * * *"
+    }
+  ]
+}
