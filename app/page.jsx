@@ -1,6 +1,33 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 
+const FALLBACK_IMAGE = 'https://via.placeholder.com/400x600/00FF88/000000?text=STOP+ME';
+
+// ?image= accepts either a full URL or a short name. The cron rotates
+// duck / ironman / tradie; the longer names are the original 9-post rotation.
+const IMAGE_NAMES = {
+  duck: 'https://i.imgur.com/duck1.png',
+  duck1: 'https://i.imgur.com/duck1.png',
+  duck2: 'https://i.imgur.com/duck2.png',
+  duck3: 'https://i.imgur.com/duck3.png',
+  ironman: 'https://i.imgur.com/ironman.png',
+  tradie: 'https://i.imgur.com/plumber.png',
+  hardhat: 'https://i.imgur.com/hardhat.png',
+  plumber: 'https://i.imgur.com/plumber.png',
+  sparky: 'https://i.imgur.com/sparky.png',
+  hulk: 'https://i.imgur.com/hulk.png',
+  spiderman: 'https://i.imgur.com/spiderman.png',
+};
+
+function resolveImage(raw) {
+  if (!raw) return FALLBACK_IMAGE;
+  const value = raw.trim();
+  const named = IMAGE_NAMES[value.toLowerCase()];
+  if (named) return named;
+  if (/^https?:\/\//i.test(value)) return value;
+  return FALLBACK_IMAGE;
+}
+
 export default function StopMeChallenge() {
   const imgRef = useRef(null);
   const containerRef = useRef(null);
@@ -23,7 +50,7 @@ export default function StopMeChallenge() {
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
     setParams({
-      imageUrl: p.get('image') || 'https://via.placeholder.com/400x600/00FF88/000000?text=STOP+ME',
+      imageUrl: resolveImage(p.get('image')),
       message: p.get('message') || 'YOU GOT IT!',
       speed: parseFloat(p.get('speed') || '6'),
       tolerance: parseInt(p.get('zone') || '70'),

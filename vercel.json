@@ -1,11 +1,12 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "framework": "nextjs",
   "crons": [
     {
       "path": "/api/cron/facebook",
-      "schedule": "0 9,13,18 * * *"
+      "schedule": "30 23,3,8 * * *"
     }
   ]
 }
